@@ -5,4 +5,5 @@ Las llamadas a las API se hacen desde servicios de Angular y además, usa localS
 ## Arrancar el proyecto
 Para que funcione la API y no de ningún error de CORS he tenido que usar un proxy, el cual usaremos para servir el proyecto:
 El host y el puerto se ponen para poder entrar desde el móvil por ejemplo.
+
 ng serve --proxy-config src/proxy.conf.json (--host 0.0.0.0 --port 80)
