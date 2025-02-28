@@ -1,0 +1,222 @@
+nav{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    padding-inline: 10px;
+
+    & div{
+        display: flex;
+        gap: 5px;
+        background-color: var(--fondoSecundario);
+        border: 1px solid var(--borde);
+        width: fit-content;
+        padding: 10px;
+        border-radius: 99999px;
+        width: 100%;
+        max-width: 500px;
+
+        & svg{
+            width: 18px;
+        }
+
+        & input{
+            all: unset;
+            width: 100%;
+        }
+    }
+}
+
+section{
+    margin-top: 40px;
+    width: 100%;
+    padding-inline: 10px;
+}
+
+.genresGrid{
+    display: grid;
+    width: 100%;
+    margin-top: 20px;
+    /*
+    With auto-fill we don't have to worry for the columns
+    the grid has, it's like flex-wrap, we set the min width to 150px
+    and max width to 1fr, this will make our grid to have different columns
+    depending on the total width of its.
+    */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.genre{
+    all: unset;
+    display: flex;
+    gap: 5px;
+    border-radius: 5px;
+    background-color: var(--fondoSecundario);
+    cursor: pointer;
+    overflow: hidden;
+
+    & p{
+        width: 100%;
+        height: 100%;
+        padding-block: 20px;
+        text-align: center;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.403);
+    }
+}
+
+.lastSearches{
+    margin-top: 20px;
+    width: 100%;
+    padding-inline: 10px;
+}
+
+.lasts{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.lasts > div{
+    width: 100%;
+    height: fit-content;
+    position: relative;
+}
+
+#removeSearchBtn{
+    all: unset;
+    width: 32px;
+    position: absolute;
+    color: #adadad;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 30px;
+    cursor: pointer;
+    transition: ease .3s;
+
+    &:hover{
+        scale: 1.2;
+    }
+}
+
+.removedAnimation{
+    animation: remove .4s normal ease-out;
+}
+
+@keyframes remove{
+    from{
+        opacity: 1;
+        scale: 1;
+    }
+
+    to{
+        opacity: 0;
+        scale: .5;
+    }
+}
+
+.showSearches{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding-inline: 10px;
+    margin-top: 30px;
+}
+
+.song, .artist{
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    transition: ease .2s;
+    position: relative;
+
+    &:hover{
+        background-color: var(--fondoSecundario);
+    }
+}
+
+.songInfo, .artistInfo{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+#songName, #artistName{
+    font-size: 20px;
+}
+
+#songDesc, #artistDesc{
+    color: #adadad;
+}
+
+#artistPic{
+    border-radius: 50%;
+}
+
+@media (width < 600px){
+    #albumCover, #artistPic{
+        width: 90px;
+    }
+
+    #songName, #artistName{
+        font-size: 18px;
+    }
+
+    #removeSearchBtn{
+        width: 24px;
+        right: 10px;
+    }
+}
+
+@media (width < 410px){
+    #albumCover, #artistPic{
+        width: 70px;
+    }
+
+    #songName, #artistName{
+        font-size: 17px;
+    }
+}
+
+.searchOptions{
+    display: flex;
+    width: 100%;
+    padding-inline: 10px;
+    margin-top: 20px;
+    gap: 15px;
+
+    & input{
+        all: unset;
+        background-color: var(--fondoSecundario);
+        padding: 5px 10px;
+        border-radius: 999px;
+        transition: ease .3s;
+        cursor: pointer;
+
+        &:checked{
+            background-color: var(--secundario);
+            box-shadow: 0px 0px 8px var(--secundario);
+            color: black;
+        }
+    }
+}
+
+#songs{
+    &::before{
+        content: 'Songs';
+    }
+}
+
+#artists{
+    &::before{
+        content: 'Artists';
+    }
+}

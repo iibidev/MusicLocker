@@ -1,0 +1,48 @@
+<main>
+    <header>
+        <img [src]="artist.picture_medium" class="artistPic">
+        <div class="artistInfo">
+            <div>
+                <h2>{{ artist.name }}</h2>
+                <p style="color: var(--contraste);">{{ artist.nb_fan | number}} fans</p>
+            </div>
+            <a [href]="artist.link">More Info <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 6C12.8284 6 13.5 5.32843 13.5 4.5C13.5 3.67157 12.8284 3 12 3C11.1716 3 10.5 3.67157 10.5 4.5C10.5 5.32843 11.1716 6 12 6ZM9 10H11V18H9V20H15V18H13V8H9V10Z"></path></svg></a>
+        </div>
+    </header>
+
+    <h3>Top songs</h3>
+
+    <div class="table" style="margin-top: 30px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Song</th>
+                    <th>Album</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let song of songs">
+                    <td>
+                        <a style="all: unset; cursor: pointer; display: flex; gap: 5px; align-items: center;" [routerLink]="'/song/' + song.id">
+                            <img [src]="song.album.cover_small">
+                            <p>{{ song.title }}</p>
+                        </a>
+                    </td>
+                    <td>{{ song.album.title }}</td>
+                    <td>{{ transformToMinutes(song.duration) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 style="margin-top: 30px;">Albums</h3>
+
+    <div class="albumGrid" style="margin-top: 30px;">
+        <a *ngFor="let album of albums" class="album" [routerLink]="'/album/' + album.id">
+            <img [src]="album.cover_medium" style="border-radius: 5px;">
+            <p id="albumTitle">{{ album.title }}</p>
+            <p id="albumDate">Release date: {{ album.release_date }}</p>
+        </a>
+    </div>
+</main>

@@ -1,0 +1,77 @@
+<nav>
+    <h2 *ngIf="!searching">Listen to whatever you want</h2>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"></path></svg>
+        <input type="text" placeholder="search" (click)="changeToSearching()" [(ngModel)]="searchText" (input)="searchSong()">
+        <button *ngIf="searching" style="all: unset; cursor: pointer;" (click)="notSearching()">Cancel</button>
+    </div>
+</nav>
+
+<div class="searchOptions" *ngIf="searching">
+    <input type="radio" name="option" id="songs" checked value="1" [(ngModel)]="searchOption" (ngModelChange)="searchSong()">
+    <input type="radio" name="option" id="artists" value="2" [(ngModel)]="searchOption" (ngModelChange)="searchSong()">
+</div>
+
+<section *ngIf="!searching">
+    <h2>Explore</h2>
+
+    <div class="genresGrid">
+        <a [routerLink]="'/genre/' + genre.id" class="genre" *ngFor="let genre of genres" style="background-image: url({{genre.picture}}); background-size: cover; backdrop-filter: blur(5px);">
+            <p>{{ genre.name }}</p>
+        </a>
+    </div>
+</section>
+
+<div *ngIf="searching && searchText.trim() == ''" class="lastSearches">
+    <h3>Last searches</h3>
+    <p style="margin-top: 10px;" *ngIf="lastSearches.length == 0">There are no recent searches.</p>
+    <div class="lasts">
+        <div *ngFor="let lastSearch of lastSearches; let i = index">
+            <div *ngIf="lastSearch.type == 'track'" #song>
+                <a routerLink="/song/{{lastSearch.id}}" class="song">
+                    <img [src]="lastSearch.album.cover" id="albumCover">
+                    <div class="songInfo">
+                        <p id="songName">{{ lastSearch.title }}</p>
+                        <p id="songDesc">Song • {{ lastSearch.artist.name }}</p>
+                    </div>
+                </a>
+                <button (click)="removeLastSearch(i, song)" id="removeSearchBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.5859 12L2.79297 4.20706L4.20718 2.79285L12.0001 10.5857L19.793 2.79285L21.2072 4.20706L13.4143 12L21.2072 19.7928L19.793 21.2071L12.0001 13.4142L4.20718 21.2071L2.79297 19.7928L10.5859 12Z"></path></svg>
+                </button>
+            </div>
+
+            <div *ngIf="lastSearch.type == 'artist'" #artist>
+                <a routerLink="/artist/{{lastSearch.id}}" class="artist">
+                    <img [src]="lastSearch.picture" id="artistPic">
+                    <div class="artistInfo">
+                        <p id="artistName">{{ lastSearch.name }}</p>
+                        <p id="artistDesc">Artist</p>
+                    </div>
+                </a>
+                <button (click)="removeLastSearch(i, artist)" id="removeSearchBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.5859 12L2.79297 4.20706L4.20718 2.79285L12.0001 10.5857L19.793 2.79285L21.2072 4.20706L13.4143 12L21.2072 19.7928L19.793 21.2071L12.0001 13.4142L4.20718 21.2071L2.79297 19.7928L10.5859 12Z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="searching && searchText.trim() != '' && searchOption == '1'" class="showSearches">
+    <a *ngFor="let song of songs" routerLink="/song/{{song.id}}" class="song" (click)="lastSearch(song)">
+        <img [src]="song.album.cover" id="albumCover">
+        <div class="songInfo">
+            <p id="songName">{{ song.title }}</p>
+            <p id="songDesc">Song • {{ song.artist.name }}</p>
+        </div>
+    </a>
+</div>
+
+<div *ngIf="searching && searchText.trim() != '' && searchOption == '2'" class="showSearches">
+    <a *ngFor="let artist of artists" routerLink="/artist/{{artist.id}}" class="artist" (click)="lastSearch(artist)">
+        <img [src]="artist.picture" id="artistPic">
+        <div class="artistInfo">
+            <p id="artistName">{{ artist.name }}</p>
+            <p id="artistDesc">Artist</p>
+        </div>
+    </a>
+</div>
